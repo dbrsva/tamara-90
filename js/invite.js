@@ -17,6 +17,69 @@
     initGallery(root, reduceMotion);
     initCountdown(root);
     initRsvp(root);
+    initMusic(root);
+  }
+
+  /* ───────── Музыка ─────────
+     Браузеры запрещают звук без действия гостя, поэтому музыка включается
+     с первого касания экрана (или с кнопки). Файл — готовый фрагмент 30 секунд
+     с плавным началом и концом (build/make_music.sh); играет один раз. */
+  function initMusic(root) {
+    var btn = root.querySelector(".jb-music") || document.querySelector(".jb-music");
+    var src = (root.getAttribute("data-music") || "").trim();
+    if (!btn || !src) return;
+
+    document.body.appendChild(btn);          // чтобы position: fixed считался от экрана
+    var audio = new Audio();
+    audio.preload = "none";
+    audio.src = src;
+    audio.setAttribute("playsinline", "");
+
+    var userPaused = false;    // гость сам выключил — больше не включаем автоматически
+    var started = false;       // первое касание уже было
+    var wasPlaying = false;
+
+    btn.hidden = false;
+    btn.classList.add("is-hint");
+
+    function render() {
+      var on = !audio.paused && !audio.ended;
+      btn.classList.toggle("is-playing", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    function play() {
+      btn.classList.remove("is-hint");
+      if (audio.ended) audio.currentTime = 0;
+      var p = audio.play();
+      if (p && p.catch) p.catch(function () { render(); });
+    }
+
+    audio.addEventListener("play", render);
+    audio.addEventListener("pause", render);
+    audio.addEventListener("ended", render);
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      started = true;
+      if (audio.paused || audio.ended) { userPaused = false; play(); }
+      else { userPaused = true; audio.pause(); }
+    });
+
+    // первое касание в любом месте страницы
+    function firstTouch(e) {
+      if (started || userPaused) return;
+      if (e.target && e.target.closest && e.target.closest(".jb-music")) return;
+      started = true;
+      play();
+      ["click", "touchend", "keydown"].forEach(function (t) { document.removeEventListener(t, firstTouch, true); });
+    }
+    ["click", "touchend", "keydown"].forEach(function (t) { document.addEventListener(t, firstTouch, true); });
+
+    // свернули браузер — пауза; вернулись — продолжаем
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { wasPlaying = !audio.paused; audio.pause(); }
+      else if (wasPlaying && !userPaused) { play(); }
+    });
   }
 
   /* ───────── Плавное появление при прокрутке ───────── */

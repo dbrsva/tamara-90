@@ -855,6 +855,58 @@
 .jb-final__date { margin-top: 12px; font-size: 12px; letter-spacing: .4em; color: var(--jb-gold); }
 .jb-final .jb-run { width: auto; margin: 0 -24px 18px; }
 
+/* ─────────── Кнопка музыки ───────────
+   Скрипт переносит кнопку в <body>: у .jb включены container queries,
+   а внутри такого контейнера position: fixed считался бы от него, а не от экрана. */
+.jb-music {
+  position: fixed;
+  z-index: 2147483000;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: #F0D890;
+  background: rgba(74, 49, 6, .84);
+  border: 1px solid rgba(224, 184, 64, .85);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 3px rgba(74, 49, 6, .84), inset 0 0 0 4px rgba(224, 184, 64, .35), 0 8px 22px rgba(40, 25, 0, .35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: jb-music-in 1s cubic-bezier(.22, .8, .24, 1) 1.2s both;
+}
+.jb-music[hidden] { display: none; }
+.jb-music:focus-visible { outline: 2px solid #E0B840; outline-offset: 3px; }
+.jb-music__note { width: 24px; height: 24px; fill: currentColor; }
+.jb-music__bars { display: none; align-items: flex-end; gap: 3px; height: 20px; }
+.jb-music__bars i { display: block; width: 3px; height: 100%; background: currentColor; border-radius: 2px; transform-origin: bottom; animation: jb-bar 1.1s ease-in-out infinite; }
+.jb-music__bars i:nth-child(2) { animation-delay: -.45s; }
+.jb-music__bars i:nth-child(3) { animation-delay: -.8s; }
+.jb-music.is-playing .jb-music__note { display: none; }
+.jb-music.is-playing .jb-music__bars { display: flex; }
+/* мягкая пульсация-подсказка, пока музыка ещё не включалась */
+.jb-music.is-hint::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(224, 184, 64, .8);
+  animation: jb-ring 2.4s ease-out 2.4s 4 both;
+  pointer-events: none;
+}
+@keyframes jb-music-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes jb-bar { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+@keyframes jb-ring { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .jb-music, .jb-music.is-hint::after { animation: none; }
+  .jb-music__bars i { animation: none; transform: scaleY(.7); }
+}
+
 /* ─────────── Анимации появления ─────────── */
 
 .jb-js [data-reveal] {

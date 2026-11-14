@@ -25,7 +25,8 @@
 <!-- JB:START — всё приглашение. Этот же фрагмент собирается в блок «HTML-код» для Taplink (см. build/build_taplink.py) -->
 <div class="jb" id="jb"
      data-rsvp-endpoint="https://script.google.com/macros/s/AKfycbwqtfYuJMMLbpl1VjoGFLnjZETPLtPHN-vUaiQHbeVTCU9--f9LqGTU-eKdVx5EfESfJQ/exec"
-     data-event="2026-12-12T15:00:00+09:00">
+     data-event="2026-12-12T15:00:00+09:00"
+     data-music="assets/music/music.mp3">
 
   <!-- ═════════ 1. ПЕРВЫЙ ЭКРАН ═════════ -->
   <header class="jb-hero">
@@ -296,6 +297,12 @@
     </div>
     <div class="jb-run jb-run--lyre" aria-hidden="true"><span class="jb-run__track"></span></div>
   </footer>
+
+  <!-- музыка: файл задаётся в data-music у корня; кнопка появляется, только если файл указан -->
+  <button class="jb-music" type="button" aria-label="Музыка" aria-pressed="false" hidden>
+    <svg class="jb-music__note" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5a2.5 2.5 0 1 1-1.5-2.3V5.6l11-2.1v11.9a2.5 2.5 0 1 1-1.5-2.3V7.4l-8 1.5v9.6Z"/></svg>
+    <span class="jb-music__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
 </div>
 <!-- JB:END -->
 

@@ -242,7 +242,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 52px 24px 64px;
+  padding: 44px 18px 72px;
   background:
     radial-gradient(120% 70% at 50% 0%, rgba(240, 216, 144, .38), rgba(240, 216, 144, 0) 60%),
     var(--jb-ivory);
@@ -256,17 +256,16 @@
 }
 .jb-hero__photo {
   position: relative;
-  width: min(76vw, 340px, calc(46svh * .75));
-  width: min(76cqi, 340px, calc(46svh * .75));
-  min-width: 220px;
-  margin-top: 18px;
+  width: min(84vw, 420px, calc(58svh * .75));
+  width: min(84cqi, 420px, calc(58svh * .75));
+  margin-top: 24px;
 }
 .jb-hero__emblem {
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: -22px;
-  width: 50px;
+  top: -30px;
+  width: 66px;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 0 var(--jb-ivory));
 }
@@ -276,28 +275,28 @@
   position: absolute;
   z-index: 1;
   left: 50%;
-  top: -14px;
-  width: 64px;
-  height: 34px;
+  top: -20px;
+  width: 86px;
+  height: 44px;
   transform: translateX(-50%);
   background: radial-gradient(closest-side, var(--jb-ivory) 70%, rgba(253, 248, 234, 0));
 }
 
 .jb-hero__text { display: flex; flex-direction: column; align-items: center; }
-.jb-hero__top { width: 150px; margin-top: 30px; opacity: .85; }
+.jb-hero__top { width: 200px; margin-top: 30px; opacity: .9; }
 .jb-hero__date {
-  margin-top: 14px;
-  font-size: 11.5px;
-  letter-spacing: .3em;
+  margin-top: 16px;
+  font-size: clamp(12px, 3.6cqi, 15px);
+  letter-spacing: .24em;
   color: var(--jb-antique);
 }
 .jb-hero__name {
-  margin-top: 16px;
+  margin-top: 18px;
   font-family: var(--jb-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(38px, 11.4vw, 64px);
-  font-size: clamp(38px, 11.4cqi, 64px);
+  font-size: clamp(44px, 13.6vw, 74px);
+  font-size: clamp(44px, 13.6cqi, 74px);
   line-height: .98;
   letter-spacing: -.005em;
   color: var(--jb-dark);
@@ -313,13 +312,13 @@
 .jb-hero__num {
   font-family: var(--jb-serif);
   font-weight: 300;
-  font-size: clamp(84px, 26vw, 150px);
-  font-size: clamp(84px, 26cqi, 150px);
+  font-size: clamp(110px, 34vw, 180px);
+  font-size: clamp(110px, 34cqi, 180px);
   line-height: .9;
   letter-spacing: -.02em;
   padding: 0 .04em;
 }
-.jb-hero__years { font-size: 14px; letter-spacing: .4em; color: var(--jb-antique); }
+.jb-hero__years { font-size: 19px; letter-spacing: .36em; color: var(--jb-antique); }
 
 .jb-hero__scroll {
   position: absolute;
@@ -582,9 +581,7 @@
 .jb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .jb-field { border: 0; min-width: 0; }
-.jb-field + .jb-field,
-.jb-collapse + .jb-field,
-.jb-field + .jb-collapse { margin-top: 26px; }
+.jb-field + .jb-field { margin-top: 26px; }
 
 .jb-label {
   display: block;
@@ -666,56 +663,6 @@
 .jb-choice.is-checked .jb-choice__mark::after { transform: scale(1); }
 .jb-choice:has(input:focus-visible) { box-shadow: 0 0 0 3px rgba(224, 184, 64, .45); }
 
-.jb-collapse {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  visibility: hidden;
-  transition: grid-template-rows .7s var(--jb-ease), opacity .7s var(--jb-ease), visibility 0s .7s, margin-top .7s var(--jb-ease);
-}
-.jb-collapse:not(.is-open) { margin-top: 0 !important; }
-.jb-collapse.is-open {
-  grid-template-rows: 1fr;
-  opacity: 1;
-  visibility: visible;
-  transition: grid-template-rows .7s var(--jb-ease), opacity .7s var(--jb-ease) .1s, visibility 0s, margin-top .7s var(--jb-ease);
-}
-.jb-collapse__in { min-height: 0; overflow: hidden; }
-
-.jb-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--jb-line); background: #fff; }
-.jb-stepper__btn {
-  width: 54px;
-  min-height: 54px;
-  padding: 0;
-  font: inherit;
-  font-size: 26px;
-  line-height: 1;
-  color: var(--jb-antique);
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: background-color .3s;
-}
-.jb-stepper__btn:hover { background: var(--jb-cream); }
-.jb-stepper__btn:focus-visible { outline: 2px solid var(--jb-bright); outline-offset: -2px; }
-.jb-stepper__val {
-  width: 60px;
-  border: 0;
-  border-left: 1px solid var(--jb-line-soft);
-  border-right: 1px solid var(--jb-line-soft);
-  font: inherit;
-  font-size: 22px;
-  text-align: center;
-  color: var(--jb-dark);
-  background: transparent;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  border-radius: 0;
-}
-.jb-stepper__val::-webkit-outer-spin-button,
-.jb-stepper__val::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.jb-stepper__val:focus { outline: 2px solid var(--jb-bright); outline-offset: -2px; }
 
 .jb-error {
   max-height: 0;
@@ -877,13 +824,13 @@
     gap: clamp(48px, 7vw, 110px);
     gap: clamp(48px, 7cqi, 110px);
   }
-  .jb-hero__photo { width: min(440px, calc(74vh * .75)); margin-top: 0; }
-  .jb-hero__text { min-width: 360px; }
-  .jb-hero__top { margin-top: 0; width: 180px; }
-  .jb-hero__date { font-size: 13px; }
-  .jb-hero__name { font-size: clamp(58px, 5.6vw, 82px); }
-  .jb-hero__num { font-size: clamp(130px, 12vw, 180px); }
-  .jb-hero__years { font-size: 16px; }
+  .jb-hero__photo { width: min(520px, calc(82vh * .75)); margin-top: 0; }
+  .jb-hero__text { min-width: 420px; }
+  .jb-hero__top { margin-top: 0; width: 240px; }
+  .jb-hero__date { font-size: 15px; }
+  .jb-hero__name { font-size: clamp(70px, 6.6vw, 100px); }
+  .jb-hero__num { font-size: clamp(170px, 15vw, 230px); }
+  .jb-hero__years { font-size: 22px; }
 
   .jb-section { padding-left: 48px; padding-right: 48px; }
   .jb-invite { padding-top: 120px; }
@@ -924,15 +871,6 @@
   .jb-choice, .jb-input { font-size: 18px; }
   .jb-countdown > div { min-width: 52px; }
   .jb-countdown__n { font-size: 30px; }
-}
-
-/* Невысокие телефоны: чуть меньше фото, чтобы «90» помещалось на первом экране */
-@media (max-height: 700px) and (max-width: 899px) {
-  .jb-hero { padding-top: 36px; padding-bottom: 44px; }
-  .jb-hero__photo { width: min(64vw, 300px, calc(40svh * .75)); min-width: 180px; }
-  .jb-hero__top { margin-top: 22px; }
-  .jb-hero__name { font-size: 36px; margin-top: 10px; }
-  .jb-hero__num { font-size: 76px; }
 }
 
 /* Уважение к системной настройке «Уменьшить движение» */

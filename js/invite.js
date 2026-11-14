@@ -205,8 +205,6 @@
     var btn = form.querySelector(".jb-submit");
     var btnText = btn.querySelector(".jb-submit__text");
     var status = form.querySelector(".jb-status");
-    var guestsWrap = form.querySelector("[data-guests]");
-    var guests = form.querySelector('input[name="guests"]');
     var nameInput = form.querySelector('input[name="name"]');
     var radios = form.querySelectorAll('input[name="attendance"]');
     var endpoint = (root.getAttribute("data-rsvp-endpoint") || "").trim();
@@ -230,10 +228,6 @@
       for (var i = 0; i < radios.length; i++) {
         radios[i].closest(".jb-choice").classList.toggle("is-checked", radios[i].checked);
       }
-      var open = !!a && a.value === "yes";
-      guestsWrap.classList.toggle("is-open", open);
-      guests.disabled = !open;
-      guestsWrap.querySelectorAll("button").forEach(function (b) { b.disabled = !open; });
       if (a) fieldOf(radios[0]).classList.remove("is-invalid");
     }
 
@@ -243,20 +237,6 @@
     nameInput.addEventListener("input", function () {
       if (nameInput.value.trim()) fieldOf(nameInput).classList.remove("is-invalid");
     });
-
-    // счётчик гостей
-    function clampGuests(v) {
-      v = parseInt(v, 10);
-      if (isNaN(v)) v = 1;
-      return Math.max(1, Math.min(10, v));
-    }
-    form.querySelectorAll("[data-step]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        guests.value = clampGuests(guests.value) + parseInt(b.getAttribute("data-step"), 10);
-        guests.value = clampGuests(guests.value);
-      });
-    });
-    guests.addEventListener("blur", function () { guests.value = clampGuests(guests.value); });
 
     function validate() {
       var ok = true, firstBad = null;
@@ -311,7 +291,7 @@
       data.append("name", nameInput.value.trim());
       data.append("attendance", a.value);
       data.append("attendanceText", a.closest(".jb-choice").querySelector(".jb-choice__text").textContent.trim());
-      data.append("guests", coming ? String(clampGuests(guests.value)) : "0");
+      data.append("guests", coming ? "1" : "0");   // одна анкета — один человек
       data.append("comment", form.elements.comment.value.trim());
       data.append("page", location.href.split("#")[0]);
 

@@ -237,97 +237,154 @@
 
 .jb-hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 44px 18px 72px;
-  background:
-    radial-gradient(120% 70% at 50% 0%, rgba(240, 216, 144, .38), rgba(240, 216, 144, 0) 60%),
-    var(--jb-ivory);
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--jb-cream);
+  background: var(--jb-dark);
 }
-.jb-hero__inner {
+
+/* фото на весь экран */
+.jb-hero__photo { position: absolute; inset: 0; z-index: 1; }
+.jb-hero__photo picture,
+.jb-hero__photo img,
+.jb-hero__bg picture,
+.jb-hero__bg img {
+  display: block;
   width: 100%;
-  max-width: 1040px;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+.jb-hero__photo img { object-position: 46% 30%; }
+
+/* размытая золотистая копия — фон по бокам на широких экранах */
+.jb-hero__bg { position: absolute; inset: -60px; z-index: 0; display: none; }
+.jb-hero__bg img { filter: blur(34px) saturate(1.2) brightness(1.02); }
+.jb-hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(224, 184, 64, .28), rgba(200, 144, 32, .22)), radial-gradient(75% 80% at 50% 45%, rgba(250, 240, 208, 0) 40%, rgba(140, 96, 16, .45));
+}
+
+/* золотое размытие сверху и снизу */
+.jb-hero__veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.jb-hero__veil--top {
+  top: 0;
+  height: 24%;
+  background: linear-gradient(to bottom, rgba(90, 60, 8, .9) 0%, rgba(140, 96, 16, .55) 40%, rgba(200, 144, 32, .18) 75%, rgba(200, 144, 32, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+}
+.jb-hero__veil--bottom {
+  bottom: 0;
+  height: 66%;
+  background:
+    radial-gradient(90% 40% at 50% 100%, rgba(224, 184, 64, .25), rgba(224, 184, 64, 0) 70%),
+    linear-gradient(to top, rgba(66, 43, 4, .97) 0%, rgba(84, 56, 7, .93) 32%, rgba(110, 76, 12, .78) 52%, rgba(140, 96, 16, .42) 72%, rgba(200, 144, 32, .1) 90%, rgba(200, 144, 32, 0) 100%);
+  -webkit-mask-image: linear-gradient(to top, #000 58%, transparent);
+  mask-image: linear-gradient(to top, #000 58%, transparent);
+}
+
+/* бегущий орнамент сверху */
+.jb-hero__orn {
+  position: absolute;
+  z-index: 3;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+}
+.jb-hero__orn .jb-run--black { --h: 28px; }
+.jb-hero__orn .jb-run--thin { margin-top: 7px; }
+
+/* текст поверх фото снизу */
+.jb-hero__text {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+  padding: 0 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
-.jb-hero__photo {
-  position: relative;
-  width: min(84vw, 420px, calc(58svh * .75));
-  width: min(84cqi, 420px, calc(58svh * .75));
-  margin-top: 24px;
-}
-.jb-hero__emblem {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: -30px;
-  width: 66px;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 0 0 var(--jb-ivory));
-}
-/* подложка под эмблемой, чтобы линия арки не проходила сквозь неё */
-.jb-hero__photo::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  top: -20px;
-  width: 86px;
-  height: 44px;
-  transform: translateX(-50%);
-  background: radial-gradient(closest-side, var(--jb-ivory) 70%, rgba(253, 248, 234, 0));
-}
-
-.jb-hero__text { display: flex; flex-direction: column; align-items: center; }
-.jb-hero__top { width: 200px; margin-top: 30px; opacity: .9; }
 .jb-hero__date {
-  margin-top: 16px;
-  font-size: clamp(12px, 3.6cqi, 15px);
-  letter-spacing: .24em;
-  color: var(--jb-antique);
+  margin-top: 14px;
+  font-size: clamp(12px, 3.6cqi, 17px);
+  letter-spacing: .26em;
+  padding-left: .26em;
+  color: var(--jb-pale);
+  text-shadow: 0 1px 10px rgba(40, 25, 0, .6);
 }
 .jb-hero__name {
-  margin-top: 18px;
   font-family: var(--jb-serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: clamp(44px, 13.6vw, 74px);
-  font-size: clamp(44px, 13.6cqi, 74px);
-  line-height: .98;
+  font-weight: 500;
+  font-size: clamp(54px, 16vw, 124px);
+  font-size: clamp(54px, 16cqi, 124px);
+  line-height: .95;
   letter-spacing: -.005em;
-  color: var(--jb-dark);
+  padding: 0 .05em .08em;
+  color: #FAF0D0;
+  background: linear-gradient(180deg, #FFF9E6 0%, #FAF0D0 35%, #F0D890 70%, #E0B840 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 16px rgba(30, 18, 0, .55));
 }
 .jb-hero__name span { display: block; }
+.jb-hero__rule { width: min(220px, 56%); margin: 16px auto 4px; }
+.jb-hero .jb-orn--hearts { background-image: url("../assets/ornaments/hearts-light.png"); }
 .jb-hero__age {
   display: flex;
   align-items: baseline;
   justify-content: center;
   gap: 14px;
-  margin-top: 6px;
 }
 .jb-hero__num {
   font-family: var(--jb-serif);
   font-weight: 300;
-  font-size: clamp(110px, 34vw, 180px);
-  font-size: clamp(110px, 34cqi, 180px);
-  line-height: .9;
+  font-size: clamp(80px, 22vw, 170px);
+  font-size: clamp(80px, 22cqi, 170px);
+  line-height: .95;
   letter-spacing: -.02em;
   padding: 0 .04em;
+  color: var(--jb-bright);
+  background: var(--jb-grad-light);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 16px rgba(30, 18, 0, .5));
 }
-.jb-hero__years { font-size: 19px; letter-spacing: .36em; color: var(--jb-antique); }
+.jb-hero__years {
+  font-size: clamp(18px, 5cqi, 26px);
+  letter-spacing: .34em;
+  color: var(--jb-pale);
+  text-shadow: 0 1px 10px rgba(40, 25, 0, .6);
+}
 
 .jb-hero__scroll {
   position: absolute;
+  z-index: 3;
   left: 50%;
-  bottom: 18px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   width: 1px;
-  height: 34px;
-  background: linear-gradient(to bottom, rgba(200, 144, 32, 0), var(--jb-gold));
-  opacity: .7;
+  height: 30px;
+  background: linear-gradient(to bottom, rgba(240, 216, 144, 0), var(--jb-pale));
+  opacity: .8;
 }
 
 /* ─────────── 2. Приглашение ─────────── */
@@ -816,21 +873,25 @@
 /* ─────────── Планшет и компьютер ─────────── */
 
 @container jb (min-width: 900px) {
-  .jb-hero { padding: 72px 48px; }
-  .jb-hero__inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(48px, 7vw, 110px);
-    gap: clamp(48px, 7cqi, 110px);
+  /* широкий экран: чёткое фото по центру во всю высоту, по бокам — размытая копия */
+  .jb-hero__bg { display: block; }
+  .jb-hero__photo {
+    left: 50%;
+    right: auto;
+    width: calc(100svh * .75);
+    min-width: 420px;
+    transform: translateX(-50%);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
   }
-  .jb-hero__photo { width: min(520px, calc(82vh * .75)); margin-top: 0; }
-  .jb-hero__text { min-width: 420px; }
-  .jb-hero__top { margin-top: 0; width: 240px; }
-  .jb-hero__date { font-size: 15px; }
-  .jb-hero__name { font-size: clamp(70px, 6.6vw, 100px); }
-  .jb-hero__num { font-size: clamp(170px, 15vw, 230px); }
+  .jb-js .jb-hero__photo[data-reveal] { transform: translateX(-50%) scale(1.035); }
+  .jb-js .jb-hero__photo[data-reveal].is-in { transform: translateX(-50%); }
+  .jb-hero__veil--bottom { height: 50%; }
+  .jb-hero__text { bottom: 44px; }
+  .jb-hero__name { font-size: clamp(64px, 5.6cqi, 88px); }
+  .jb-hero__num { font-size: clamp(96px, 8.4cqi, 132px); }
   .jb-hero__years { font-size: 22px; }
+  .jb-hero__date { font-size: 15px; }
 
   .jb-section { padding-left: 48px; padding-right: 48px; }
   .jb-invite { padding-top: 120px; }
@@ -865,7 +926,6 @@
 
 /* Очень узкие экраны (iPhone SE 1-го поколения и т.п.) */
 @container jb (max-width: 350px) {
-  .jb-hero { padding-left: 16px; padding-right: 16px; }
   .jb-section { padding-left: 16px; padding-right: 16px; }
   .jb-card { padding-left: 18px; padding-right: 18px; }
   .jb-choice, .jb-input { font-size: 18px; }

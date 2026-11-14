@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://dbrsva.github.io/tamara-90/">
   <meta property="og:type" content="website">
 
-  <link rel="preload" as="image" href="assets/photos/photo-1-960.webp" imagesrcset="assets/photos/photo-1-640.webp 640w, assets/photos/photo-1-960.webp 960w" imagesizes="(min-width: 900px) 440px, 76vw" type="image/webp">
+  <link rel="preload" as="image" href="assets/photos/photo-1-960.webp" imagesrcset="assets/photos/photo-1-640.webp 640w, assets/photos/photo-1-960.webp 960w" imagesizes="(min-width: 900px) 75svh, 100vw" type="image/webp">
 
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/page.css">
@@ -29,30 +29,44 @@
 
   <!-- ═════════ 1. ПЕРВЫЙ ЭКРАН ═════════ -->
   <header class="jb-hero">
-    <div class="jb-hero__inner">
-      <div class="jb-hero__photo" data-reveal="photo">
-        <span class="jb-orn jb-orn--emblem jb-hero__emblem" aria-hidden="true"></span>
-        <div class="jb-arch">
-          <picture>
-            <source type="image/webp" srcset="assets/photos/photo-1-640.webp 640w, assets/photos/photo-1-960.webp 960w" sizes="(min-width: 900px) 440px, 76vw">
-            <img src="assets/photos/photo-1-960.jpg" srcset="assets/photos/photo-1-640.jpg 640w, assets/photos/photo-1-960.jpg 960w" sizes="(min-width: 900px) 440px, 76vw"
-                 width="960" height="1280" alt="Тамара Владимировна" fetchpriority="high" decoding="async">
-          </picture>
-        </div>
-      </div>
+    <!-- размытая золотистая подложка (видна по бокам на широких экранах) -->
+    <div class="jb-hero__bg" aria-hidden="true">
+      <picture>
+          <source type="image/webp" srcset="assets/photos/photo-1-640.webp 640w, assets/photos/photo-1-960.webp 960w" sizes="(min-width: 900px) 75svh, 100vw">
+          <img src="assets/photos/photo-1-960.jpg" srcset="assets/photos/photo-1-640.jpg 640w, assets/photos/photo-1-960.jpg 960w" sizes="(min-width: 900px) 75svh, 100vw"
+               width="960" height="1280" alt="" decoding="async">
+        </picture>
+    </div>
+    <!-- фото на весь экран -->
+    <div class="jb-hero__photo" data-reveal="photo">
+      <picture>
+          <source type="image/webp" srcset="assets/photos/photo-1-640.webp 640w, assets/photos/photo-1-960.webp 960w" sizes="(min-width: 900px) 75svh, 100vw">
+          <img src="assets/photos/photo-1-960.jpg" srcset="assets/photos/photo-1-640.jpg 640w, assets/photos/photo-1-960.jpg 960w" sizes="(min-width: 900px) 75svh, 100vw"
+               width="960" height="1280" alt="Тамара Владимировна" fetchpriority="high" decoding="async">
+        </picture>
+    </div>
+    <!-- золотое размытие сверху и снизу -->
+    <div class="jb-hero__veil jb-hero__veil--top" aria-hidden="true"></div>
+    <div class="jb-hero__veil jb-hero__veil--bottom" aria-hidden="true"></div>
 
-      <div class="jb-hero__text">
-        <span class="jb-orn jb-orn--hearts jb-hero__top" aria-hidden="true" data-reveal style="--d:1"></span>
-        <p class="jb-caps jb-hero__date" data-reveal style="--d:2">Ахсынньы 12 күнэ 2026 сыл</p>
-        <h1 class="jb-hero__name" data-reveal style="--d:3">
-          <span>Тамара</span>
-          <span>Владимировна</span>
-        </h1>
-        <p class="jb-hero__age" data-reveal style="--d:5" aria-label="90 сааһа">
-          <span class="jb-hero__num jb-gold-text">90</span>
-          <span class="jb-caps jb-hero__years">сааһа</span>
-        </p>
-      </div>
+    <!-- бегущий орнамент сверху -->
+    <div class="jb-hero__orn" aria-hidden="true">
+      <div class="jb-run jb-run--black"><span class="jb-run__track"></span></div>
+      <div class="jb-run jb-run--trees jb-run--rev jb-run--thin"><span class="jb-run__track"></span></div>
+    </div>
+
+    <!-- текст снизу -->
+    <div class="jb-hero__text">
+      <h1 class="jb-hero__name" data-reveal style="--d:3">
+        <span>Тамара</span>
+        <span>Владимировна</span>
+      </h1>
+      <span class="jb-orn jb-orn--hearts jb-hero__rule" aria-hidden="true" data-reveal style="--d:4"></span>
+      <p class="jb-hero__age" data-reveal style="--d:5" aria-label="90 сааһа">
+        <span class="jb-hero__num">90</span>
+        <span class="jb-caps jb-hero__years">сааһа</span>
+      </p>
+      <p class="jb-caps jb-hero__date" data-reveal style="--d:6">Ахсынньы 12 күнэ 2026 сыл</p>
     </div>
     <span class="jb-hero__scroll" aria-hidden="true"></span>
   </header>
